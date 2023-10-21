@@ -77,7 +77,7 @@ def queue_download(
             quote=message,
         )
     else:
-        replies.add(text="**✄1�7 Solicitud agregada/procesando ✄1�7**", quote=message)
+        replies.add(text="**✄1�7 Solicitud agregada/procesando ✄1�7**", quote=message)
         part_size = int(get_setting(bot, "part_size"))
         max_size = int(get_setting(bot, "max_size"))
         downloads[addr] = split_download(url, part_size, max_size, downloader)
