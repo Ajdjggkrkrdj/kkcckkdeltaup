@@ -3,6 +3,7 @@ import simplebot
 from deltachat import Message
 from simplebot.bot import DeltaBot, Replies
 import os
+from downloader import sizeof_fmt
 
 class RUVSUpload:
 	def init(self, user, password):
@@ -80,12 +81,4 @@ class RUVSUpload:
 			replies.send_reply_messages()
 			print(response.text)
 			
-def sizeof_fmt(num: float) -> str:
-    """Format size in human redable form."""
-    suffix = "B"
-    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-        if abs(num) < 1024.0:
-            return "%3.1f%s%s" % (num, unit, suffix)  # noqa
-        num /= 1024.0
-    return "%.1f%s%s" % (num, "Yi", suffix)  # noqa
 #finish

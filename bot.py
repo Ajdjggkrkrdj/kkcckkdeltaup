@@ -4,7 +4,7 @@ from deltachat import Message
 from simplebot.bot import DeltaBot, Replies
 from cliente import *
 import os
-from downloader import FileTooBig, download_file, split_download
+from downloader import FileTooBig, download_file, split_download, get_setting
 import time
 from threading import Thread
 from typing import Callable, Dict, Generator
@@ -77,7 +77,7 @@ def queue_download(
             quote=message,
         )
     else:
-        replies.add(text="**✅ Solicitud agregada/procesando ✅**", quote=message)
+        replies.add(text="**✄1�7 Solicitud agregada/procesando ✄1�7**", quote=message)
         part_size = int(get_setting(bot, "part_size"))
         max_size = int(get_setting(bot, "max_size"))
         downloads[addr] = split_download(url, part_size, max_size, downloader)

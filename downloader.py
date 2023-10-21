@@ -24,6 +24,16 @@ session.request = functools.partial(session.request, timeout=15)  # noqa
 class FileTooBig(ValueError):
     """File is too big."""
 
+def get_setting(bot: DeltaBot, key: str, value=None) -> str:
+    """Get setting value, if value is given and the setting is not set, the setting will be set to the given value."""
+    scope = __name__.split(".", maxsplit=1)[0]
+    val = bot.get(key, scope=scope)
+    if val is None and value is not None:
+        bot.set(key, value, scope=scope)
+        val = value
+    return val
+
+
 def download_file(url: str, folder: str, max_size: int) -> str:
     """Download URL and save the file in the give folder.
 
