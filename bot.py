@@ -4,7 +4,7 @@ from deltachat import Message
 from simplebot.bot import DeltaBot, Replies
 from cliente import *
 import os
-from .downloader import FileTooBig, download_file, get_setting, split_download
+from downloader import FileTooBig, download_file, get_setting, split_download
 import time
 from threading import Thread
 from typing import Callable, Dict, Generator
