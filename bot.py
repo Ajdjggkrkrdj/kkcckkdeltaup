@@ -77,7 +77,7 @@ def queue_download(
             quote=message,
         )
     else:
-        replies.add(text="**✄1�7 Solicitud agregada/procesando ✄1�7**", quote=message)
+        replies.add(text="**✅ Solicitud agregada/procesando ✅**", quote=message)
         part_size = int(get_setting(bot, "part_size"))
         max_size = int(get_setting(bot, "max_size"))
         downloads[addr] = split_download(url, part_size, max_size, downloader)
@@ -96,7 +96,7 @@ def _send_files(bot: DeltaBot) -> None:
                 #text = f"Part {num}/{parts_count}"
                 client = RUVSUpload()
                 client.init('julio','UploadZ0*')
-                client.upload(path, chat)
+                client.upload(path, chat, replies)
                 if num == parts_count:
                     next(parts, None)  # close context
                     downloads.pop(addr, None)
