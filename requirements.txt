@@ -1,0 +1,5 @@
+simplebot
+requests
+multivolumefile
+py7zr
+flask
