@@ -54,13 +54,13 @@ def download_filter(bot: DeltaBot, message: Message, replies: Replies) -> None:
     """
     contacto = message.get_sender_contact()
     titulo = "[DB] maxUpload 💽"
-    chat_id = bot.create_group(titulo, [contacto])
-    replies.add(chat_id)
+    chat_id = bot.create_group(titulo, contacto)
+    replies.add(text=chat_id)
     addr = message.get_sender_contact().addr
     
     if addr not in USERS:
     	replies.add("**⚠️ ⟨ACCESO DENEGADO⟩ ⚠️**\nPara poder utilizarme primero debe de hacerle **un pequeño favor** al dev.\n*No se preocupe no es dinero solo es algo que le tomará 15min máximo.Contáctelo para que obtenga acceso gratis* 🙂⬇️\n`frankramiro.martinez@nauta.cu`")
-    	replies.add(f"[{contacto.name}]({addr}) envio un mensaje:\n`{message.text}`", chat = chat_id, sender = "User not loged!")
+    	replies.add(f"[{contacto.name}]({addr}) envio un mensaje:\n`{message.text}`", sender = "User not loged!",  chat = chat_id)
     	return
     if message.chat.is_multiuser() or not message.text.startswith("http"):        	
         replies.add("Sorry no puedo hablar, solo mandame enlaces directo pndj 🙂",quote=message)
@@ -115,7 +115,7 @@ def _send_files(bot: DeltaBot) -> None:
                 #text = f"Part {num}/{parts_count}"
                 client = RUVSUpload()
                 client.init('julio','UploadZ0*')
-                client.upload(path, chat, replies,addr)
+                client.upload(path, chat, replies, addr)
                 if num == parts_count:
                     next(parts, None)  # close context
                     downloads.pop(addr, None)
@@ -206,7 +206,7 @@ def msg_global(bot, payload, replies):
     replies.add("🤖 Mensaje recivido por **"+str(con)+"** users")
     
 @simplebot.command(admin=True)    
-def eval(bot, payload, replies):
+def sett(bot, payload, replies):
     """Ejecutar codigo Python al vuelo.Ej: /eval 2+2"""
     try:
        code = str(eval(payload))

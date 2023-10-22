@@ -15,7 +15,7 @@ class RUVSUpload:
 		self.headers = {
 		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36'
 		}
-	def upload(self, path, chat,addr):
+	def upload(self, path, chatt,replies,addr):
 		options ={ 
 		'url': f'{self.host}?P=UserLogin',
 		'method': 'POST',
@@ -68,19 +68,19 @@ class RUVSUpload:
 						tam = sizeof_fmt(os.stat(path).st_size)
 						text=f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n\n**Power by [FrancyJ2M](mailto:frankramiro.martinez@nauta.cu)**"
 						replies.add(f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n📤: {addr}\n\n#links", chat = CHAT_ID)
-						replies.add(text=text, sender="Subida exitosa!", chat=chat)
+						replies.add(text=text, sender="Subida exitosa!", chat=chatt)
 						replies.send_reply_messages()
 						print("Archivo subido exitosamente\n\n")
 					else:
-						replies.add(text="Ocurio un error en la subida del archivo, por favor comuniquelo al admin", sender="Error en subida!", chat=chat)
+						replies.add(text="Ocurio un error en la subida del archivo, por favor comuniquelo al admin", sender="Error en subida!", chat=chatt)
 						replies.send_reply_messages()
 						print(response.text)
 				else:
-					replies.add(text="*Archivo denegado por el host!!*", sender="Error en subida!", chat=chat)
+					replies.add(text="*Archivo denegado por el host!!*", sender="Error en subida!", chat=chatt)
 					replies.send_reply_messages()
 					print(response.text)
 		else:
-			replies.add(text=f"El [host]({self.host}) esta off, por favor verefircar y sino es asi comuniquelo al [admin](mailto:frankramiro.martinez@nauta.cu)", sender="Inicio de sesion!", chat=chat)
+			replies.add(text=f"El [host]({self.host}) esta off, por favor verefircar y sino es asi comuniquelo al [admin](mailto:frankramiro.martinez@nauta.cu)", sender="Inicio de sesion!", chat=chatt)
 			replies.send_reply_messages()
 			print(response.text)
 			
