@@ -1,6 +1,6 @@
 """simplebot_upload_free : Descargador basado en simplebot_downloader, el mismo crea enlaces de descarga gratuitos :D"""
 import simplebot
-from deltachat import Message
+from deltachat import Message, Chat, Contact
 from simplebot.bot import DeltaBot, Replies
 import psutil
 import sys
@@ -226,7 +226,7 @@ def del_user(bot, payload, replies):
     bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
     
 @simplebot.command(admin=True)
-def grupo(bot,payload,replies):
+def grupo(bot,payload,replies,message):
 	 try:
 	 	global CHAT_ID
 	 	contacto = message.get_sender_contact()
