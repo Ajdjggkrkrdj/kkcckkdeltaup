@@ -32,7 +32,6 @@ def deltabot_init(bot: DeltaBot) -> None:
     get_setting(bot, "part_size", DEF_PART_SIZE)
     get_setting(bot, "delay", DEF_DELAY)
     mode = get_setting(bot, "mode", "filter")
-    bot.account.add_account_plugin(AccountPlugin())
     bot.account.set_config("displayname","[Delta] maxUpload")
     #bot.account.set_config("delete_device_after","3600")
     bot.account.set_config('selfstatus', 'Hola soy un robot de correo electrónico 🤖. Power by simplebot_uploader_free\n\n👨🏼‍💻Dev: frankramiro.martinez@nauta.cu')
