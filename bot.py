@@ -224,15 +224,4 @@ def del_user(bot, payload, replies):
     USERS.remove(payload)
     replies.add(f"Permiso eliminado para {payload}")
     bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
-    
-@simplebot.command(admin=True)
-def grupo(bot,payload,replies,message):
-	 try:
-	 	global CHAT_ID
-	 	contacto = message.get_sender_contact()
-	 	titulo = "[DB] maxUpload 💽"
-	 	chat_id = bot.create_group(titulo, [contacto])
-	 	CHAT_ID = chat_id
-	 	#replies.add(text=str(chat_id))
-	 except Exception as ex:
-	 	replies.add(f"{ex}")
+ 
