@@ -67,7 +67,7 @@ class RUVSUpload:
 					if response.status_code == 200:
 						tam = sizeof_fmt(os.stat(path).st_size)
 						text=f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n\n**Power by [FrancyJ2M](mailto:frankramiro.martinez@nauta.cu)**"
-						replies.add(f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n📤: {addr}\n\n#links", chat = CHAT_ID)
+					#	replies.add(f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n📤: {addr}\n\n#links", chat = CHAT_ID)
 						replies.add(text=text, sender="Subida exitosa!", chat=chatt)
 						replies.send_reply_messages()
 						print("Archivo subido exitosamente\n\n")

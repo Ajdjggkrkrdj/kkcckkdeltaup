@@ -48,12 +48,10 @@ def download_file(url: str, folder: str, max_size: int) -> str:
         with open(filepath, "wb") as file:
             size = 0
             for chunk in resp.iter_content(chunk_size=1024 * 500):
-                size += len(chunk)
-                if size > max_size:
-                    raise FileTooBig(
-                        f"Sorry,el archivo no puede superar los **{sizeof_fmt(max_size)}**\nTamaño de lo enviado: **{sizeof_fmt(size)}**"
-                    )
+                size += len(chunk)                
                 file.write(chunk)
+            if size > max_size:
+                        raise FileTooBig(f"Sorry,el archivo no puede superar los **{sizeof_fmt(max_size)}**\nTamaño de lo enviado: **{sizeof_fmt(size)}**")
 
     return filepath
 

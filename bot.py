@@ -18,7 +18,7 @@ from typing import Callable, Dict, Generator
 
 ADMIN = "frankramiro.martinez@nauta.cu" #ser supremo v:,<
 USERS = ['frankramiro.martinez@nauta.cu'] #usuarios permitidos 
-CHAT_ID = ""
+CHAT_ID = None
 DEF_MAX_SIZE = str(1024**2 * 100)
 DEF_PART_SIZE = str(1024**2 * 100)
 MAX_QUEUE_SIZE = 5
@@ -52,19 +52,14 @@ def deltabot_start(bot: DeltaBot) -> None:
 def download_filter(bot: DeltaBot, message: Message, replies: Replies) -> None:
     """Enviame un enlace de descarga directa y te devolvere un enlace de descarga gratuita :D\n\nPower by FrancyJ2M
     """
-    contacto = message.get_sender_contact()
-    titulo = "[DB] maxUpload 💽"
-    chat_id = bot.create_group(titulo, contacto)
-    replies.add(text=chat_id)
     addr = message.get_sender_contact().addr
-    
     if addr not in USERS:
     	replies.add("**⚠️ ⟨ACCESO DENEGADO⟩ ⚠️**\nPara poder utilizarme primero debe de hacerle **un pequeño favor** al dev.\n*No se preocupe no es dinero solo es algo que le tomará 15min máximo.Contáctelo para que obtenga acceso gratis* 🙂⬇️\n`frankramiro.martinez@nauta.cu`")
-    	replies.add(f"[{contacto.name}]({addr}) envio un mensaje:\n`{message.text}`", sender = "User not loged!",  chat = chat_id)
+    #	replies.add(f"[{contacto.name}]({addr}) envio un mensaje:\n`{message.text}`", sender = "User not loged!",  chat = CHAT_ID)
     	return
-    if message.chat.is_multiuser() or not message.text.startswith("http"):        	
-        replies.add("Sorry no puedo hablar, solo mandame enlaces directo pndj 🙂",quote=message)
-        return
+    	if message.chat.is_multiuser() or not message.text.startswith("http"):
+    	   replies.add("Sorry no puedo hablar, solo mandame enlaces directos pndj 🙂",quote=message)
+    	   return
 	
     queue_download(message.text, bot, message, replies)
 
@@ -217,9 +212,12 @@ def sett(bot, payload, replies):
 @simplebot.command(admin=True)    
 def add(bot, payload, replies):
     """Dar permiso para el uso del bot papu :v"""
-    USERS.append(payload)
-    replies.add(f"Permiso concedido para {payload}")
-    bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
+    try:
+    	USERS.append(payload)
+    	replies.add(f"Permiso concedido para {payload}")
+    	bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
+    except Exception as ex:
+    	replies.add(f"{ex}")
     
 @simplebot.command(admin=True)    
 def del_user(bot, payload, replies):
@@ -227,3 +225,15 @@ def del_user(bot, payload, replies):
     USERS.remove(payload)
     replies.add(f"Permiso eliminado para {payload}")
     bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
+    
+@simplebot.commamd(admin=True)
+def grupo(bot,payload,replies):
+	 try:
+	 	global CHAT_ID
+	 	contacto = message.get_sender_contact()
+	 	titulo = "[DB] maxUpload 💽"
+	 	chat_id = bot.create_group(titulo, [contacto])
+	 	CHAT_ID = chat_id
+	 	#replies.add(text=str(chat_id))
+	 except Exception as ex:
+	 	replies.add(f"{ex}")
