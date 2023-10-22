@@ -186,7 +186,7 @@ def report(bot, message, payload, replies):
     replies.add("✔️ *Reporte enviado* ")
         
 @simplebot.command(admin=True)
-def msg(bot, payload, replies):
+def responder(bot, payload, replies):
     """ Responderle a un usuario a traves del bot :v """
     correo = payload.split()
     msg = payload

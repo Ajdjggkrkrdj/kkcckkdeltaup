@@ -1,6 +1,7 @@
 #!/bin/bash
 # configure the bot
 python3 -m simplebot init deltahelp@disroot.org Francy82+
+python3 -m simplebot -a deltahelp@disroot.org set_name SwissBotpython3 -m simplebot -a deltahelp@disroot.org set_name Uploader
 python3 -m simplebot -a deltahelp@disroot.org set_avatar bot.jpeg
 #Uploader Free
 python3 -m simplebot -a deltahelp@disroot.org plugin --add ./bot.py
