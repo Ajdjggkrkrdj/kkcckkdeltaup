@@ -51,7 +51,7 @@ def download_file(url: str, folder: str, max_size: int) -> str:
                 size += len(chunk)
                 if size > max_size:
                     raise FileTooBig(
-                        f"Sorry,el archivo no puede superar los {sizeof_fmt(max_size)}"
+                        f"Sorry,el archivo no puede superar los **{sizeof_fmt(max_size)}**\nTamaño de lo enviado: **{sizeof_fmt(size)}**"
                     )
                 file.write(chunk)
 

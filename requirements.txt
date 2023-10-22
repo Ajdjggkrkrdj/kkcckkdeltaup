@@ -3,3 +3,4 @@ requests
 multivolumefile
 py7zr
 flask
+psutil

@@ -5,6 +5,8 @@ from simplebot.bot import DeltaBot, Replies
 import os
 from downloader import sizeof_fmt
 
+CHAT_ID = ""
+
 class RUVSUpload:
 	def init(self, user, password):
 		self.username = user
@@ -13,7 +15,7 @@ class RUVSUpload:
 		self.headers = {
 		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36'
 		}
-	def upload(self, path, chat, replies):
+	def upload(self, path, chat,addr):
 		options ={ 
 		'url': f'{self.host}?P=UserLogin',
 		'method': 'POST',
@@ -65,7 +67,8 @@ class RUVSUpload:
 					if response.status_code == 200:
 						tam = sizeof_fmt(os.stat(path).st_size)
 						text=f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n\n**Power by [FrancyJ2M](mailto:frankramiro.martinez@nauta.cu)**"
-						replies.add(text=text, sender="Subida exitosa! 🔥", chat=chat)
+						replies.add(f"🔗: [{path.split('/')[-1]}]({self.host}?P=EditResource&ID={ID}) - **[{tam}]**\n*User:* `julio` *Passw:* `UploadZ0*`\n📤: {addr}\n\n#links", chat = CHAT_ID)
+						replies.add(text=text, sender="Subida exitosa!", chat=chat)
 						replies.send_reply_messages()
 						print("Archivo subido exitosamente\n\n")
 					else:
