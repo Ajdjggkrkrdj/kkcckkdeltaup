@@ -17,8 +17,8 @@ from typing import Callable, Dict, Generator
 #==============================#
 
 ADMIN = "frankramiro.martinez@nauta.cu" #ser supremo v:,<
-USERS = ['frankramiro.martinez@nauta.cu'] #usuarios permitidos 
-CHAT_ID = None
+USERS = ['frankramiro.martinez@nauta.cu'] #usuarios permitidos
+BD = ['frankramiro.martinez@nauta.cu']
 DEF_MAX_SIZE = str(1024**2 * 100)
 DEF_PART_SIZE = str(1024**2 * 100)
 MAX_QUEUE_SIZE = 5
@@ -49,14 +49,20 @@ def deltabot_start(bot: DeltaBot) -> None:
 
 
 def download_filter(bot: DeltaBot, message: Message, replies: Replies) -> None:
-    """Enviame un enlace de descarga directa y te devolvere un enlace de descarga gratuita :D\n\nPower by FrancyJ2M
+    """Enviame un enlace de descarga directa y te devolvere un enlace de descarga gratuita :D\n
+    
+    Power by FrancyJ2M
     """
-    addr = message.get_sender_contact().addr
-    if addr not in USERS:
-    	replies.add("**⚠️ ⟨ACCESO DENEGADO⟩ ⚠️**\nPara poder utilizarme primero debe de hacerle **un pequeño favor** al dev.\n*No se preocupe no es dinero solo es algo que le tomará 15min máximo.Contáctelo para que obtenga acceso gratis* 🙂⬇️\n`frankramiro.martinez@nauta.cu`")
-    #	replies.add(f"[{contacto.name}]({addr}) envio un mensaje:\n`{message.text}`", sender = "User not loged!",  chat = CHAT_ID)
+    addr = message.get_sender_contact()
+    chat_id = bot.get_chat(12)
+    if addr.addr not in USERS:
+    	replies.add("**⚠️ ⟨ACCESO DENEGADO⟩ ⚠️**\nPara poder utilizarme primero debe de hacerle **un pequeño favor** al dev.\n*No se preocupe no es dinero solo es algo que le tomará 15min máximo.Contáctelo para que obtenga acceso gratis:*\n`frankramiro.martinez@nauta.cu`")
+    	replies.add(f"[{addr.name}]({addr.addr}) envio un mensaje:\n`{message.text}`", sender = "User not loged!",  chat = chat_id)
+    	if addr.addr not in BD:
+    		BD.append(addr.addr)
+    		replies.add(f"{BD}\n\n#bd",chat = chat_id)
     	return
-    	if message.chat.is_multiuser() or not message.text.startswith("http"):
+    if message.chat.is_multiuser() or not message.text.startswith("http"):
     	   replies.add("Sorry no puedo hablar, solo mandame enlaces directos pndj 🙂",quote=message)
     	   return
 	
@@ -173,10 +179,8 @@ def verify(bot: DeltaBot, replies: Replies) -> None:
 @simplebot.command(admin=False)
 def report(bot, message, payload, replies):
     """Reportar errores!.Si hace preguntas estupidas o spam puede ser banneado para siempre del bot\nEj: /report Ocurrió ****"""
-    addr = message.get_sender_contact().addr
-    contacto = message.get_sender_contact().name
-    
-    bot.get_chat(ADMIN).send_text('🤖 **Msg de ['+contacto+']('+addr+')** :\n'+payload)
+    addr = message.get_sender_contact()   
+    bot.get_chat(ADMIN).send_text('🤖 **Msg de ['+addr.name+']('+addr.addr+')** :\n'+payload)
     replies.add("✔️ *Reporte enviado* ")
         
 @simplebot.command(admin=True)
@@ -194,7 +198,7 @@ def msg_global(bot, payload, replies):
     #correo = payload.split()
     msg = payload
     con=0  
-    for correos in USERS1:
+    for correos in BD:
         con+=1
         bot.get_chat(correos).send_text('# ⚠️ **Mensaje Global** ⚠️\n'+msg)
     replies.add("🤖 Mensaje recivido por **"+str(con)+"** users")
@@ -211,17 +215,21 @@ def sett(bot, payload, replies):
 @simplebot.command(admin=True)    
 def add(bot, payload, replies):
     """Dar permiso para el uso del bot papu :v"""
+    chat_id = bot.get_chat(12)
     try:
     	USERS.append(payload)
     	replies.add(f"Permiso concedido para {payload}")
-    	bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
+    	bot.get_chat(payload).send_text("**🤖 ACCESO CONCEDIDO 🆓**")
+    	replies.add(filename = "sticker.webp")
+    	bot.get_chat(chat_id).send_text(f"{USERS}\n\n#users")
     except Exception as ex:
     	replies.add(f"{ex}")
     
 @simplebot.command(admin=True)    
 def del_user(bot, payload, replies):
     """Quitar permiso para el uso del bot papu :v"""
+    chat_id = bot.get_chat(12)
     USERS.remove(payload)
     replies.add(f"Permiso eliminado para {payload}")
-    bot.get_chat(CHAT_ID).send_text(USERS+"\n\n#users")
+    bot.get_chat(chat_id).send_text(f"{USERS}\n\n#users")
  
